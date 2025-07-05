@@ -14,20 +14,22 @@ A simple image classifier for handwritten digits using the MNIST dataset, built 
 ## Installation
 
 1. **Clone the repository:**
-
+- git clone git@github.com:S-Bana/mnist_tf_keras_classifier.git
+  
 2. **Install required libraries:**
-- pip3 install -r requirements.txt 
+- pip3 install -r requirements.txt
 
-4. **Steps implemented:**
+3. **Run:**
+- python3 mnist_classifier.py
+
+  
+## Steps implemented
 - Install required libraries
 - Load the MNIST dataset
 - Preprocess the data
 - Build the model
 - Train the model
 - Evaluate and make predictions
-
-5. **Run:**
-- python3 mnist_classifier.py
 
 ## Project Structure
 
