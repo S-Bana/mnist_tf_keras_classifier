@@ -72,5 +72,9 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 # Train Model
 model.fit(train_img, train_label, epochs=5, batch_size=64, validation_data=(test_img, test_label))
 
+# Test Model
+loss_, acc_ = model.evaluate(test_img, test_label)
+print(f'Test Accuracy: {acc_*100:.3}% \t Test Loss: {loss_}')
+
 
 
