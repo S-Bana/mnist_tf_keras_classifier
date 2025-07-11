@@ -68,3 +68,9 @@ model.add(layers.Dense(10, activation='softmax'))
 
 # Compile Model
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+# Train Model
+model.fit(train_img, train_label, epochs=5, batch_size=64, validation_data=(test_img, test_label))
+
+
+
