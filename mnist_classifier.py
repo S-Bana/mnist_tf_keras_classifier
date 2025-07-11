@@ -66,3 +66,5 @@ model.add(layers.Dense(64, activation='relu'))
 #‌# Output layer (10 mode => (0,1,..,8,9))
 model.add(layers.Dense(10, activation='softmax'))
 
+# Compile Model
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
