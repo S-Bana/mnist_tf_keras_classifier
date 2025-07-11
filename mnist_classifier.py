@@ -76,5 +76,9 @@ model.fit(train_img, train_label, epochs=5, batch_size=64, validation_data=(test
 loss_, acc_ = model.evaluate(test_img, test_label)
 print(f'Test Accuracy: {acc_*100:.3}% \t Test Loss: {loss_}')
 
+# Prediction
+predict_ = model.predict(test_img)
+print(f'prediction for first image: {np.argmax(predict_[0])}')
+
 
 
