@@ -32,4 +32,16 @@ with np.load(path, allow_pickle=True) as data:
 train_img = train_img / 250.0
 test_img = test_img / 250.0
 
+print(train_img.shape) # (60000, 28, 28)
+print(test_img.shape) # (10000, 28, 28)
 
+#‌ Reshape images to (28,28,1)
+train_img = train_img.reshape((train_img.shape[0], 28, 28, 1))
+test_img = test_img.reshape((test_img.shape[0], 28, 28, 1))
+
+print(train_img.shape) # (60000, 28, 28, 1)
+print(test_img.shape) # (10000, 28, 28, 1)
+
+#‌ Convert label to one-hot encoding
+train_label = to_categorical(test_label)
+test_label = to_categorical(test_label)
