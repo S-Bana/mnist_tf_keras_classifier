@@ -11,7 +11,7 @@ from tensorflow.keras.utils import to_categorical
 
 
 # # Save to a compressed .npz file
-# np.savez('mnist_local.npz', 
+# np.savez('dataset/mnist.npz', 
 #          train_img=train_img, 
 #          train_label=train_label, 
 #          test_img=test_img, 
@@ -19,8 +19,10 @@ from tensorflow.keras.utils import to_categorical
 
 
 # Load from the local .npz file
-data = np.load('mnist_local.npz')
-train_img = data['train_img']
-train_label = data['train_label']
-test_img = data['test_img']
-test_label = data['test_label']
+path = 'dataset/mnist.npz'
+
+with np.load(path, allow_pickle=True) as data:
+    train_img = data['x_train']
+    train_label = data['y_train']
+    test_img = data['x_test']
+    test_label = data['y_test']
