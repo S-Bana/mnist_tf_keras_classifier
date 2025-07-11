@@ -45,3 +45,24 @@ print(test_img.shape) # (10000, 28, 28, 1)
 #‌ Convert label to one-hot encoding
 train_label = to_categorical(test_label)
 test_label = to_categorical(test_label)
+
+# Make Model CNN
+model = models.Sequential()
+
+#‌ Add layers in model
+#‌# Input layer
+model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
+model.add(layers.MaxPooling2D((2, 2)))
+
+#‌# hiden layer
+model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+model.add(layers.MaxPooling2D((2, 2)))
+
+model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+
+model.add(layers.Flatten())
+model.add(layers.Dense(64, activation='relu'))
+
+#‌# Output layer (10 mode => (0,1,..,8,9))
+model.add(layers.Dense(10, activation='softmax'))
+
