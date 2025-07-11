@@ -26,3 +26,10 @@ with np.load(path, allow_pickle=True) as data:
     train_label = data['y_train']
     test_img = data['x_test']
     test_label = data['y_test']
+
+
+# Preprocessing ( Normalize the pixel value to be between 0 , 1 )
+train_img = train_img / 250.0
+test_img = test_img / 250.0
+
+
