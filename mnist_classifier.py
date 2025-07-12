@@ -1,24 +1,21 @@
-# import libraries 
+# Import necessary libraries
 import numpy as np
-import pandas as pd
-import tensorflow as tf
-from tensorflow.keras import datasets, layers, models
-from tensorflow.keras.utils import to_categorical
+from tensorflow.keras import datasets, layers, models # Specific modules from Keras (TensorFlow's high-level API) for loading datasets, building neural network layers, and creating models.
+from tensorflow.keras.utils import to_categorical  # A utility to convert integer labels into one-hot encoded vectors.
 
 
-# download dataset
+# Note: The code had commented-out lines to download and save the MNIST dataset.
+#‌ # download dataset
 # (train_img, train_label), (test_img, test_label) = datasets.mnist.load_data()
-
 
 # # Save to a compressed .npz file
 # np.savez('dataset/mnist.npz', 
-#          train_img=train_img, 
-#          train_label=train_label, 
-#          test_img=test_img, 
-#          test_label=test_label)
+#          x_train=train_img, 
+#          y_train=train_label, 
+#          x_test=test_img, 
+#          y_test=test_label)
 
-
-# Load from the local .npz file
+# Load the dataset from a local .npz file.
 path = 'dataset/mnist.npz'
 
 with np.load(path, allow_pickle=True) as data:
@@ -28,57 +25,62 @@ with np.load(path, allow_pickle=True) as data:
     test_label = data['y_test']
 
 
-# Preprocessing ( Normalize the pixel value to be between 0 , 1 )
-train_img = train_img / 250.0
-test_img = test_img / 250.0
+# Preprocessing: Normalize pixel values to be between 0 and 1.
+train_img = train_img / 255.0
+test_img = test_img / 255.0
 
-print(train_img.shape) # (60000, 28, 28)
-print(test_img.shape) # (10000, 28, 28)
+print(train_img.shape) # Expected: (60000, 28, 28)
+print(test_img.shape)  # Expected: (10000, 28, 28)
 
-#‌ Reshape images to (28,28,1)
+# Reshape images to add a channel dimension (for grayscale images, 1 channel).
+# Required for Conv2D layers: (batch_size, height, width, channels)
 train_img = train_img.reshape((train_img.shape[0], 28, 28, 1))
 test_img = test_img.reshape((test_img.shape[0], 28, 28, 1))
 
-print(train_img.shape) # (60000, 28, 28, 1)
-print(test_img.shape) # (10000, 28, 28, 1)
+print(train_img.shape) # Expected: (60000, 28, 28, 1)
+print(test_img.shape)  # Expected: (10000, 28, 28, 1)
 
-#‌ Convert label to one-hot encoding
-train_label = to_categorical(test_label)
-test_label = to_categorical(test_label)
+# Convert integer labels to one-hot encoding.
+# This is crucial for 'categorical_crossentropy' loss.
+train_label = to_categorical(train_label)
+test_label = to_categorical(test_label) 
 
-# Make Model CNN
+# Build the Convolutional Neural Network (CNN) model
 model = models.Sequential()
 
-#‌ Add layers in model
-#‌# Input layer
+# Add layers to the model
+# Input Layer: First Convolutional layer with ReLU activation and MaxPooling
 model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
 model.add(layers.MaxPooling2D((2, 2)))
 
-#‌# hiden layer
+# Hidden Layers: More Convolutional and MaxPooling layers
 model.add(layers.Conv2D(64, (3, 3), activation='relu'))
 model.add(layers.MaxPooling2D((2, 2)))
 
 model.add(layers.Conv2D(64, (3, 3), activation='relu'))
 
+# Flatten the output from convolutional layers to feed into dense layers
 model.add(layers.Flatten())
 model.add(layers.Dense(64, activation='relu'))
 
-#‌# Output layer (10 mode => (0,1,..,8,9))
+# Output Layer: Dense layer with 10 neurons (for 10 classes, digits 0-9)
+# Softmax activation for probability distribution over classes
 model.add(layers.Dense(10, activation='softmax'))
 
-# Compile Model
+# Compile the Model
+# Optimizer: Adam (efficient for gradient descent)
+# Loss Function: Categorical Crossentropy (for multi-class classification with one-hot labels)
+# Metrics: Accuracy (to monitor performance)
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-# Train Model
+# Train the Model
+# Fit the model to the training data, validating on the test data after each epoch.
 model.fit(train_img, train_label, epochs=5, batch_size=64, validation_data=(test_img, test_label))
 
-# Test Model
+# Evaluate the Model's performance on the test set
 loss_, acc_ = model.evaluate(test_img, test_label)
 print(f'Test Accuracy: {acc_*100:.3}% \t Test Loss: {loss_}')
 
-# Prediction
+# Make a prediction for the first image in the test set
 predict_ = model.predict(test_img)
-print(f'prediction for first image: {np.argmax(predict_[0])}')
-
-
-
+print(f'Prediction for first image: {np.argmax(predict_[0])}')
