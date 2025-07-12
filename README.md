@@ -23,7 +23,7 @@ A simple image classifier for handwritten digits using the MNIST dataset, built 
     ```bash
     pip3 install -r requirements.txt
     ```
-    *Note: A `requirements.txt` file would typically list `numpy`, `tensorflow`, and `pandas` (though pandas isn't directly used).*
+    *Note: A `requirements.txt` file would typically list `numpy`, `tensorflow`.*
 3.  **Ensure Dataset Availability:**
     * The script expects the MNIST dataset to be available locally at `dataset/mnist.npz`.
     * If you don't have it, uncomment the `datasets.mnist.load_data()` and `np.savez(...)` lines in `mnist_classifier.py` once to download and save it. Remember to re-comment them after the first run if you wish to use the local file.
