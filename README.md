@@ -101,7 +101,6 @@ You need the following Python libraries installed:
 
 -   `numpy`
 -   `tensorflow` (which includes Keras)
--   `pandas` (imported in the script, though not actively used for this specific task)
 
 You can install them using pip as shown in the [Installation](#installation) section.
 
@@ -113,14 +112,12 @@ Below is a detailed breakdown of the `mnist_classifier.py` script.
 
 ```python
 import numpy as np
-import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
 from tensorflow.keras.utils import to_categorical
 ````
 
   - **`numpy as np`**: Fundamental package for numerical computation in Python, especially useful for array operations.
-  - **`pandas as pd`**: Data manipulation and analysis library. Although imported here, it's not directly used in the current version of the script.
   - **`tensorflow as tf`**: The core open-source machine learning framework developed by Google. It provides a comprehensive ecosystem for building and deploying ML models.
   - **`tensorflow.keras`**: Keras is a high-level API for building and training deep learning models, now integrated directly into TensorFlow.
       - **`datasets`**: Contains functions to load popular datasets (like MNIST).
